@@ -1,0 +1,390 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>gamble_ryan_published_solar_project</title><meta name="generator" content="MATLAB 9.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-03-23"><meta name="DC.source" content="gamble_ryan_published_solar_project.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Solar Elevations and Times of Sunrise and Sunset</a></li><li><a href="#2">Main Code</a></li><li><a href="#3">COLLECT USER INPUT</a></li><li><a href="#4">FOR DEMONSTRATION PURPOSES</a></li><li><a href="#5">SUNRISE AND SUNSET TIMES THROUGHOUT THE YEAR</a></li><li><a href="#6">SOLAR ELEVATION DURING DAYLIGHT HOURS FIGURE</a></li><li><a href="#7">FIND SOLAR ELEVATION FOR EACH DAYLIGHT HOUR IN THE YEAR</a></li><li><a href="#8">PRINT RESULTS TO A FILE</a></li><li><a href="#9">CALCULATIONS NOT SHOWN</a></li></ul></div><h2 id="1">Solar Elevations and Times of Sunrise and Sunset</h2><p>Author: Ryan Gamble</p><p>Date: 08-Mar-2017</p><p>Assignment: Solar elevation project</p><p>Description: Prompt a user for values of altitude, latitude, longitude, and date. Use this input to generate and display time of sunrise and sunset values, as well as solar elevation values for the daylight hours of the given location.</p><pre class="codeinput">clear <span class="string">all</span>;     <span class="comment">% Removes all variables, globals, functions and MEX links</span>
+clc;           <span class="comment">% Clears the command window</span>
+close <span class="string">all</span>;     <span class="comment">% Closes all of the open figure windows</span>
+format <span class="string">short</span>;  <span class="comment">% Reset to MATLAB's default format</span>
+</pre><h2 id="2">Main Code</h2><h2 id="3">COLLECT USER INPUT</h2><p>First the user is prompted for date in monthes and days, as well as the altitude, latitude, and longitude for the location of interest. For the calculations made later, the month and day values must be converted to the corresponding value for the day number out of the year (January first being 1). This is accomplished using the function modatoday().</p><pre class="codeinput"><span class="comment">%mo = input('Enter the month of the date to view(1-12): ');</span>
+<span class="comment">%da = input('Enter the day of the date to view(1-31): ');</span>
+<span class="comment">%z = input('Enter the altitude of the location to view(in km): ');</span>
+<span class="comment">%la = input('Enter the latitude of the location to view(in degrees): ');</span>
+<span class="comment">%lo = input('Enter the longitude of the location to view(in degrees): ');</span>
+
+<span class="comment">%Convert the month and day values to day number of year</span>
+<span class="comment">%day = modatoday(mo, da);</span>
+</pre><h2 id="4">FOR DEMONSTRATION PURPOSES</h2><pre class="codeinput">mo = 1;  <span class="comment">%January,</span>
+da = 1;  <span class="comment">%The first</span>
+z = 55;  <span class="comment">%Altitude of 55km</span>
+la = 39; <span class="comment">%Latitude of 39</span>
+lo = 77; <span class="comment">%Longitude of 77</span>
+
+<span class="comment">%Find the day value for January, 1</span>
+day = modatoday(mo, da);
+</pre><h2 id="5">SUNRISE AND SUNSET TIMES THROUGHOUT THE YEAR</h2><p>The time of sunrise and sunset are calculated by the equations</p><p><img src="gamble_ryan_published_solar_project_eq18358669581301936879.png" alt="$$Tsr = L/15 + M - H$$" style="width:141px;height:16px;"></p><p><img src="gamble_ryan_published_solar_project_eq04230428258590004104.png" alt="$$Tss = L/15 + M + H$$" style="width:141px;height:16px;"></p><p>Where L is longitude, M is the time of meridian passage, and H is the time corresponding to the solar hour angle for when the sun crosses the horizon. This makes the length of day light from M-H to M+H at a given longitude.</p><p>The function calc_srss() is used to calculate time of sunrise and sunset and it requires an input of altitude(z) and latitude(la) so that the solar hour angle(H) can be found for each day of the year. An input of longitude(lo) is required for the equation of sunrise and sunset times. The calc_srss() function outputs a list of the day numbers (1-365) converted to the angular fraction of the year values stored as the variable num. The num varibale is used heavily when calculating solar declination(D) as well as M inside the function. The other two outputs are times of sunrise and sunset for each day of the year in hours. Once the outputs are collected, they can be used to create two plots, the first representing time of sunrise for each day of the year, and the second for times of sunset for each day of the year.</p><pre class="codeinput">figure(1)
+
+<span class="comment">%Calculate the time of sunrise and sunset for each day in a year at a given</span>
+<span class="comment">%altitude, latitude, and longitude</span>
+[num, Tsr, Tss] = calc_srss(z, la, lo);
+
+<span class="comment">%Sunrise plot</span>
+subplot(1,2,1)
+plot(num, Tsr, <span class="string">'-k'</span>, <span class="string">'Linewidth'</span>, 2)
+<span class="comment">%Format plot</span>
+set (gca, <span class="string">'Fontsize'</span>, 8)
+title(<span class="string">'Time of Sunrise for each Day of the Year'</span>)
+xlabel(<span class="string">'Day of the Year'</span>)
+ylabel(<span class="string">'Time of Sunrise [Hours]'</span>)
+
+<span class="comment">%Sunset plot</span>
+subplot(1,2,2)
+plot(num, Tss, <span class="string">'-k'</span>, <span class="string">'Linewidth'</span>, 2)
+<span class="comment">%Format plot</span>
+set (gca, <span class="string">'Fontsize'</span>, 8)
+title(<span class="string">'Time of Sunset for each Day of the Year'</span>)
+xlabel(<span class="string">'Day of the Year'</span>)
+ylabel(<span class="string">'Time of Sunset [Hours]'</span>)
+</pre><img vspace="5" hspace="5" src="gamble_ryan_published_solar_project_01.png" style="width:560px;height:420px;" alt=""> <h2 id="6">SOLAR ELEVATION DURING DAYLIGHT HOURS FIGURE</h2><p>Solar elevation for a given day of the year can be found using the equation</p><p><img src="gamble_ryan_published_solar_project_eq08016045053082110117.png" alt="$$sin(\propto) = sin(\phi)sin(D) + cos(\phi)cos(D)cos(h)$$" style="width:290px;height:16px;"></p><p>Where <img src="gamble_ryan_published_solar_project_eq14709500654581996272.png" alt="$\propto$" style="width:10px;height:8px;"> is the solar elevation angle, <img src="gamble_ryan_published_solar_project_eq06401276552089372917.png" alt="$\phi$" style="width:9px;height:14px;"> is the latitude, D is the solar declination for a given day, and h the solar hour angle as a function of longitude and M for a given day.</p><p>The function calc_se is used to calculate the solar elevation for each day of the year for the hours from sunrise to sunset at a given latitude and longitude. Latitude is used in the equation for solar elevation and longitude is used to calculate the solar hour angle. The time of sunrise and sunset for the given day are used to calculate a set of h values for each hour between the two times, then those h values are used to calculate the correpsonding set of solar elevations. The day number is used to calculate D and M as needed within the function. The output of this function is a set of times and the corresponding solar elevation for that time and location. This data can be used to create a plot of solar elevation for the day light hours of a day as shown below. In our example this is the solar elevation for January, 1 at a latitude of 39 degrees and a longitude of 77 degrees.</p><pre class="codeinput">figure(2)
+
+<span class="comment">%Calculate the solar elevation at a given latitude and longitude for the</span>
+<span class="comment">%daylight hours of a given day</span>
+[t, se] = calc_se(la, lo, Tsr(day), Tss(day), day);
+
+plot(t, se, <span class="string">'-k'</span>, <span class="string">'Linewidth'</span>, 2)
+<span class="comment">%Format plot</span>
+set (gca, <span class="string">'Fontsize'</span>, 10)
+title(<span class="string">'Solar Elevation during Daylight Hours'</span>)
+xlabel(<span class="string">'Hours of Day from Sunrise to Sunset [Hours]'</span>)
+ylabel(<span class="string">'Solar Elevation [Degrees]'</span>)
+</pre><img vspace="5" hspace="5" src="gamble_ryan_published_solar_project_02.png" style="width:560px;height:420px;" alt=""> <h2 id="7">FIND SOLAR ELEVATION FOR EACH DAYLIGHT HOUR IN THE YEAR</h2><p>To find the solar elevation for every day light hour of the year at a given latitude and longitude the previous functions are used in a repetition structure that runs calc_se() for each day of the year and records all of the daylight hours found from time of sunrise to sunset for each day at the given location, the day numbers associated with each time, and the solar elevation at that time.</p><pre class="codeinput">T = [];    <span class="comment">%Create a data set for daylight hours of a year</span>
+Days = []; <span class="comment">%Create a data set for cooresponding day numbers for each time</span>
+Se = [];   <span class="comment">%Create a data set for solar elevation at each time</span>
+<span class="keyword">for</span> i = 1:365 <span class="comment">%Loop for each day of the year</span>
+    [ti, sei] = calc_se(la, lo, Tsr(i), Tss(i), i); <span class="comment">%Run calc_se each loop</span>
+    ti = dectohm(ti);                               <span class="comment">%Convert time to GMT</span>
+    days = i.*ones(1, length(ti));                  <span class="comment">%Find the size of days</span>
+    Days = [Days days];                             <span class="comment">%Append days</span>
+    T = [T ti];                                     <span class="comment">%Append times</span>
+    Se = [Se sei];                                  <span class="comment">%Append solar elevation</span>
+<span class="keyword">end</span>
+</pre><h2 id="8">PRINT RESULTS TO A FILE</h2><p>Once all of the calculations have been completed, the analyzed data can be written to a text file. Here the data being written is one file of solar elevation angles for each hour of daylight in the year for the user input location. Another file contains the time of sunrise and sunset for each day of the year at the user input location.</p><pre class="codeinput"><span class="comment">% Print solar elvation angles for each daylight hour of the year to a file</span>
+file_setxt = fopen(<span class="string">'solar_elevation.txt'</span>, <span class="string">'wt'</span>);
+fprintf(file_setxt, <span class="string">'Altitude:%6.2f Latitude:%6.2f Longitude:%6.2f\n'</span>,<span class="keyword">...</span>
+    z, la, lo);
+fprintf(file_setxt, <span class="string">'Day \t Time \t Elevation Angle\n'</span>);
+fprintf(file_setxt, <span class="string">'%4.0f \t %5.0f \t %7.2f\n'</span>, [Days;T;Se]);
+
+Tsr = round(dectohm(Tsr)); <span class="comment">%Converts time of sunrise to GMT</span>
+Tss = round(dectohm(Tss)); <span class="comment">%Converts time of sunset to GMT</span>
+
+<span class="comment">% Print the sunrise and sunset times for each day in a year to a text file</span>
+file_srsstxt = fopen(<span class="string">'sunrise_sunset_times.txt'</span>, <span class="string">'wt'</span>);
+fprintf(file_srsstxt, <span class="string">'Altitude:%6.2f Latitude:%6.2f Longitude:%6.2f\n'</span>,<span class="keyword">...</span>
+    z, la, lo);
+fprintf(file_srsstxt, <span class="string">'Day \t Sunrise \t Sunset\n'</span>);
+fprintf(file_srsstxt, <span class="string">'%4.0f \t %5.0f \t\t %5.0f\n'</span>, [num;Tsr;Tss]);
+</pre><h2 id="9">CALCULATIONS NOT SHOWN</h2><p>Here are some of the formulas used within the main functions.</p><p><img src="gamble_ryan_published_solar_project_eq05458190963393748449.png" alt="$$sin(D) = sin(23.44)sin(\sigma)$$" style="width:170px;height:15px;"></p><p>D represents the solar declination, or the angle from the sun to the center of the earth as a function of \sigma shown below.</p><p><img src="gamble_ryan_published_solar_project_eq06285330443740489599.png" alt="$$\sigma = 279.9348 + d + 1.914827sin(d) - 0.079525cos(d) + 0.019938sin(2d) - 0.001620cos(2d)$$" style="width:574px;height:15px;"></p><p>\sigma is related to d according to the equation above.</p><p><img src="gamble_ryan_published_solar_project_eq02838749325621025245.png" alt="$$d = ((day-1)360)/365.242$$" style="width:175px;height:15px;"></p><p>d represents the angular fraction for the day out of the year. In other words, a value associated with how far through the year does each day represent. This is important because solar elevation angles are different throughout the year even at the same geographic location so it is important to specify the angular fraction of the year using d.</p><p><img src="gamble_ryan_published_solar_project_eq01905577312176292093.png" alt="$$h = 15(T-M)-lo$$" style="width:128px;height:15px;"></p><p>h represents the solar hour angle, or the angle from the sun to the earth at the time of sunrise or sunset for a given day and longitude. It is used when calculating solar elevation.</p><p><img src="gamble_ryan_published_solar_project_eq11702641136763622543.png" alt="$$M = 12 + 0.123570sin(d) - 0.004289cos(d) + 0.153809sin(2d) + 0.060783cos(2d)$$" style="width:515px;height:15px;"></p><p>M is the time of meridian passage for a given day and must be used to find the time of sunrise and sunset for a given day and location. M represents the time that the sun directly overhead a location, or solar noon.</p><p><img src="gamble_ryan_published_solar_project_eq04653727301001561071.png" alt="$$cos(H) = [sin(A)-sin(\phi)sin(D)]/[cos(\phi)cos(D)]$$" style="width:318px;height:15px;"></p><p>H also reprents the solar hour angle but instead of being an angle like h, it is a time in hour minutes that represents the time from sunrise to M and from M to sunset.</p><p><img src="gamble_ryan_published_solar_project_eq11705104433336013987.png" alt="$$A = -1.76459z^{0.40795}$$" style="width:131px;height:14px;"></p><p>A represents the sunrise/sunset solar elevation angle and is a function of altitude(z). This is used when calculating H for the calculation of sunrise and sunset.</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Solar Elevations and Times of Sunrise and Sunset
+%
+%
+% Author: Ryan Gamble
+% 
+% Date: 08-Mar-2017
+% 
+% Assignment: Solar elevation project
+% 
+% Description: Prompt a user for values of altitude, latitude, longitude,
+% and date. Use this input to generate and display time of sunrise and
+% sunset values, as well as solar elevation values for the daylight hours
+% of the given location.
+
+clear all;     % Removes all variables, globals, functions and MEX links
+clc;           % Clears the command window
+close all;     % Closes all of the open figure windows
+format short;  % Reset to MATLAB's default format
+
+%% Main Code
+
+%% COLLECT USER INPUT
+%
+% First the user is prompted for date in monthes and days, as well as the
+% altitude, latitude, and longitude for the location of interest. For the
+% calculations made later, the month and day values must be converted to
+% the corresponding value for the day number out of the year (January first
+% being 1). This is accomplished using the function modatoday().
+
+%mo = input('Enter the month of the date to view(1-12): ');
+%da = input('Enter the day of the date to view(1-31): ');
+%z = input('Enter the altitude of the location to view(in km): ');
+%la = input('Enter the latitude of the location to view(in degrees): ');
+%lo = input('Enter the longitude of the location to view(in degrees): ');
+
+%Convert the month and day values to day number of year
+%day = modatoday(mo, da);
+
+%% FOR DEMONSTRATION PURPOSES
+mo = 1;  %January,
+da = 1;  %The first
+z = 55;  %Altitude of 55km
+la = 39; %Latitude of 39
+lo = 77; %Longitude of 77
+
+%Find the day value for January, 1
+day = modatoday(mo, da);
+
+
+
+%% SUNRISE AND SUNSET TIMES THROUGHOUT THE YEAR
+%
+% The time of sunrise and sunset are calculated by the equations
+% 
+% $$Tsr = L/15 + M - H$$
+% 
+% $$Tss = L/15 + M + H$$
+%
+% Where L is longitude, M is the time of meridian passage, and H is the
+% time corresponding to the solar hour angle for when the sun crosses the
+% horizon. This makes the length of day light from M-H to M+H at a given
+% longitude.
+% 
+% The function calc_srss() is used to calculate time of sunrise and sunset 
+% and it requires an input of altitude(z) and
+% latitude(la) so that the solar hour angle(H) can be found for each day of
+% the year. An input of longitude(lo) is required for the equation of
+% sunrise and sunset times. The calc_srss() function outputs a list of the
+% day numbers (1-365) converted to the angular fraction of the year values
+% stored as the variable num. The num varibale is used heavily when
+% calculating solar declination(D) as well as M inside the function. The
+% other two outputs are times of sunrise and sunset for each day of the
+% year in hours. Once the outputs are collected,
+% they can be used to create two plots, the first representing time of
+% sunrise for each day of the year, and the second for times of sunset for
+% each day of the year.
+
+figure(1)
+
+%Calculate the time of sunrise and sunset for each day in a year at a given
+%altitude, latitude, and longitude
+[num, Tsr, Tss] = calc_srss(z, la, lo);
+
+%Sunrise plot
+subplot(1,2,1)
+plot(num, Tsr, '-k', 'Linewidth', 2)
+%Format plot
+set (gca, 'Fontsize', 8)
+title('Time of Sunrise for each Day of the Year')
+xlabel('Day of the Year')
+ylabel('Time of Sunrise [Hours]')
+
+%Sunset plot
+subplot(1,2,2)
+plot(num, Tss, '-k', 'Linewidth', 2)
+%Format plot
+set (gca, 'Fontsize', 8)
+title('Time of Sunset for each Day of the Year')
+xlabel('Day of the Year')
+ylabel('Time of Sunset [Hours]')
+
+
+
+%% SOLAR ELEVATION DURING DAYLIGHT HOURS FIGURE
+%
+% Solar elevation for a given day of the year can be found using the
+% equation
+%
+% $$sin(\propto) = sin(\phi)sin(D) + cos(\phi)cos(D)cos(h)$$
+%
+% Where $\propto$ is the solar elevation angle, $\phi$ is the latitude, D
+% is the solar declination for a given day, and h the solar hour angle as a
+% function of longitude and M for a given day.
+%
+% The function calc_se is used to calculate the solar elevation for each
+% day of the year for the hours from sunrise to sunset at a given latitude
+% and longitude. Latitude is used in the equation for solar elevation and
+% longitude is used to calculate the solar hour angle. The time of sunrise
+% and sunset for the given day are used to calculate a set of h values for
+% each hour between the two times, then those h values are used to
+% calculate the correpsonding set of solar elevations. The day number is
+% used to calculate D and M as needed within the function. The output of
+% this function is a set of times and the corresponding solar elevation for
+% that time and location. This data can be used to create a plot of solar
+% elevation for the day light hours of a day as shown below. In our example
+% this is the solar elevation for January, 1 at a latitude of 39 degrees
+% and a longitude of 77 degrees.
+
+figure(2)
+
+%Calculate the solar elevation at a given latitude and longitude for the
+%daylight hours of a given day
+[t, se] = calc_se(la, lo, Tsr(day), Tss(day), day);
+
+plot(t, se, '-k', 'Linewidth', 2)
+%Format plot
+set (gca, 'Fontsize', 10)
+title('Solar Elevation during Daylight Hours')
+xlabel('Hours of Day from Sunrise to Sunset [Hours]')
+ylabel('Solar Elevation [Degrees]')
+
+
+
+%% FIND SOLAR ELEVATION FOR EACH DAYLIGHT HOUR IN THE YEAR
+%
+% To find the solar elevation for every day light hour of the year at a
+% given latitude and longitude the previous functions are used in a
+% repetition structure that runs calc_se() for each day of the year and
+% records all of the daylight hours found from time of sunrise to sunset
+% for each day at the given location, the day numbers associated with each
+% time, and the solar elevation at that time.
+
+T = [];    %Create a data set for daylight hours of a year
+Days = []; %Create a data set for cooresponding day numbers for each time
+Se = [];   %Create a data set for solar elevation at each time
+for i = 1:365 %Loop for each day of the year
+    [ti, sei] = calc_se(la, lo, Tsr(i), Tss(i), i); %Run calc_se each loop
+    ti = dectohm(ti);                               %Convert time to GMT
+    days = i.*ones(1, length(ti));                  %Find the size of days
+    Days = [Days days];                             %Append days
+    T = [T ti];                                     %Append times
+    Se = [Se sei];                                  %Append solar elevation
+end
+
+
+
+%% PRINT RESULTS TO A FILE
+%
+% Once all of the calculations have been completed, the analyzed data can
+% be written to a text file. Here the data being written is one file of
+% solar elevation angles for each hour of daylight in the year for the user
+% input location. Another file contains the time of sunrise and sunset for
+% each day of the year at the user input location.
+
+% Print solar elvation angles for each daylight hour of the year to a file
+file_setxt = fopen('solar_elevation.txt', 'wt');
+fprintf(file_setxt, 'Altitude:%6.2f Latitude:%6.2f Longitude:%6.2f\n',...
+    z, la, lo);
+fprintf(file_setxt, 'Day \t Time \t Elevation Angle\n');
+fprintf(file_setxt, '%4.0f \t %5.0f \t %7.2f\n', [Days;T;Se]);
+
+Tsr = round(dectohm(Tsr)); %Converts time of sunrise to GMT
+Tss = round(dectohm(Tss)); %Converts time of sunset to GMT
+
+% Print the sunrise and sunset times for each day in a year to a text file
+file_srsstxt = fopen('sunrise_sunset_times.txt', 'wt');
+fprintf(file_srsstxt, 'Altitude:%6.2f Latitude:%6.2f Longitude:%6.2f\n',...
+    z, la, lo);
+fprintf(file_srsstxt, 'Day \t Sunrise \t Sunset\n');
+fprintf(file_srsstxt, '%4.0f \t %5.0f \t\t %5.0f\n', [num;Tsr;Tss]);
+
+%% CALCULATIONS NOT SHOWN
+%
+% Here are some of the formulas used within the main functions.
+%
+% $$sin(D) = sin(23.44)sin(\sigma)$$
+%
+% D represents the solar declination, or the angle from the sun to the
+% center of the earth as a function of \sigma shown below.
+%
+% $$\sigma = 279.9348 + d + 1.914827sin(d) - 0.079525cos(d) + 0.019938sin(2d) - 0.001620cos(2d)$$
+%
+% \sigma is related to d according to the equation above.
+%
+% $$d = ((day-1)360)/365.242$$
+%
+% d represents the angular fraction for the day out of the year. In other
+% words, a value associated with how far through the year does each day
+% represent. This is important because solar elevation angles are different
+% throughout the year even at the same geographic location so it is
+% important to specify the angular fraction of the year using d.
+%
+% $$h = 15(T-M)-lo$$
+%
+% h represents the solar hour angle, or the angle from the sun to the earth
+% at the time of sunrise or sunset for a given day and longitude. It is
+% used when calculating solar elevation.
+%
+% $$M = 12 + 0.123570sin(d) - 0.004289cos(d) + 0.153809sin(2d) + 0.060783cos(2d)$$
+%
+% M is the time of meridian passage for a given day and must be used to
+% find the time of sunrise and sunset for a given day and location. M
+% represents the time that the sun directly overhead a location, or solar
+% noon.
+%
+% $$cos(H) = [sin(A)-sin(\phi)sin(D)]/[cos(\phi)cos(D)]$$
+%
+% H also reprents the solar hour angle but instead of being an angle like
+% h, it is a time in hour minutes that represents the time from sunrise to
+% M and from M to sunset.
+%
+% $$A = -1.76459z^{0.40795}$$
+%
+% A represents the sunrise/sunset solar elevation angle and is a function
+% of altitude(z). This is used when calculating H for the calculation of
+% sunrise and sunset.
+##### SOURCE END #####
+--></body></html>
